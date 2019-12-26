@@ -1,0 +1,81 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+name: $(Date:yyyy.MM.dd)$(Rev:.r)
+steps:
+- task: VersionJSONFile@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    recursion: True
+    VersionNumber: '$(Build.BuildNumber)'
+    useBuildNumberDirectly: True
+    VersionRegex: '^(\d{4})(\d{2})(\d{2})\.(\d+)$'
+    versionForJSONFileFormat: '{1}.{2}.{3}'
+    FilenamePattern: 'package.json'
+    OutputVersion: 'OutputedVersion'
+
+- task: VersionDotNetCoreAssemblies@2
+  inputs:
+    Path: '$(Build.SourcesDirectory)'
+    VersionNumber: '$(Build.BuildNumber)'
+    Injectversion: True
+    VersionRegex: '^(\d{4})(\d{2})(\d{2})\.(\d+)$'
+    FilenamePattern: '.csproj'
+    Field: 'Version'
+    OutputVersion: 'OutputedVersion'
+
+- script: |
+    cd Anniversaries.Web
+    npm install
+    npm run build
+    cd ..
+  displayName: Build FE
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '3.x'
+
+- task: DotNetCoreCLI@2
+  displayName: Restore packages
+  inputs:
+    command: restore
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  displayName: Build
+  inputs:
+    command: build
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-restore'
+
+#- task: DotNetCoreCLI@2
+#  displayName: Perform tests and code coverage analysis
+#  inputs:
+#    command: test
+#    projects: '**/*Tests/*.csproj'
+#    arguments: '--configuration $(buildConfiguration) --collect "Code coverage" --no-build'
+
+- task: DotNetCoreCLI@2
+  displayName: Publish to staging directory
+  inputs:
+    command: publish
+    publishWebProjects: True
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
+    zipAfterPublish: True
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
+    artifactName: 'drop'

@@ -1,0 +1,202 @@
+<template>
+  <div class="wedding-anniversaries">
+    <div>
+      <v-expansion-panels flat v-model="expandedPanel">
+        <v-expansion-panel v-if="anniversaries && anniversaries.length > 0">
+          <v-expansion-panel-header
+            >Verfügbare Jubiläen</v-expansion-panel-header
+          >
+
+          <v-expansion-panel-content>
+            <v-progress-circular
+              v-if="loadingAnniversaries"
+              indeterminate
+              color="primary"
+            ></v-progress-circular>
+
+            <v-list disabled>
+              <v-list-item-group v-model="anniversaries" color="primary">
+                <v-list-item v-for="(item, i) in anniversaries" :key="i">
+                  <v-list-item-icon>
+                    <v-icon>fas fa-calendar-alt</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.name"></v-list-item-title>
+                    <v-list-item-subtitle v-text="item.description">
+                    </v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+
+        <v-expansion-panel>
+          <v-expansion-panel-header
+            >Persönliche Jubiläen</v-expansion-panel-header
+          >
+
+          <v-expansion-panel-content>
+            <v-menu
+              v-model="menu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              max-width="290px"
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on }">
+                <v-text-field
+                  v-model="computedDateFormatted"
+                  label="Hochzeitsdatum"
+                  persistent-hint
+                  readonly
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="date"
+                no-title
+                @input="menu = false"
+                :first-day-of-week="1"
+              ></v-date-picker>
+            </v-menu>
+
+            <v-text-field
+              label="Name (optional)"
+              placeholder="z.B.: Standesamt"
+              v-model="optionalName"
+            ></v-text-field>
+
+            <v-btn
+              class="ma-2"
+              :loading="loadingAppointments"
+              tile
+              dark
+              :color="calculateButtonColor"
+              @click="calculateAppointments"
+              ><v-icon class="mr-2">fas fa-cog</v-icon>Berechnen
+            </v-btn>
+
+            <v-btn class="ma-2" tile dark :href="downloadLink" color="primary"
+              ><v-icon class="mr-2">fas fa-calendar-plus</v-icon>ICAL</v-btn
+            >
+
+            <v-btn
+              v-if="this.appointments && this.appointments.length > 0"
+              class="ma-2"
+              tile
+              dark
+              color="red"
+              @click="clearAppointments"
+              ><v-icon>fas fa-times</v-icon>
+            </v-btn>
+
+            <v-list disabled>
+              <v-list-item-group v-model="appointments" color="primary">
+                <v-list-item v-for="(item, i) in appointments" :key="i">
+                  <v-list-item-icon>
+                    <v-icon>fas fa-calendar-alt</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title
+                      v-text="formatDate(item)"
+                    ></v-list-item-title>
+                    <v-list-item-subtitle
+                      v-text="formatName(item)"
+                    ></v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator";
+import Axios from "axios";
+import IAnniversary from "../models/Anniversary";
+import IAppointment from "../models/Appointment";
+
+@Component
+export default class WeddingAnniversaries extends Vue {
+  private baseUri: string = "/anniversaries/wedding";
+
+  private anniversaries: IAnniversary[] = [];
+  private loadingAnniversaries: boolean = false;
+
+  private menu: boolean = false;
+  private date: string = "2016-07-16";
+  private optionalName: string = "";
+  private generatedAppointmentsDate: string = "";
+  private generatedAppointmentsName: string = "";
+
+  private loadingAppointments: boolean = false;
+  private appointments: IAppointment[] = [];
+
+  private expandedPanel: number = 0;
+
+  async mounted(): Promise<void> {
+    await this.loadAnniversaries();
+  }
+
+  async loadAnniversaries(): Promise<void> {
+    this.loadingAnniversaries = true;
+    Axios.create()
+      .get<IAnniversary[]>(`${this.baseUri}`)
+      .then(response => {
+        this.loadingAnniversaries = false;
+        this.anniversaries = response.data;
+      });
+  }
+
+  get computedDateFormatted(): string {
+    return new Date(this.date).toLocaleDateString();
+  }
+
+  get nameParameter(): string {
+    return this.optionalName ? `?name=${this.optionalName}` : "";
+  }
+
+  get downloadLink(): string {
+    return `${this.baseUri}/${this.date}.ics${this.nameParameter}`;
+  }
+
+  get calculateButtonColor(): string {
+    const dateIsSame = this.date == this.generatedAppointmentsDate;
+    const nameIsSame = this.optionalName == this.generatedAppointmentsName;
+    return dateIsSame && nameIsSame ? "primary" : "orange";
+  }
+
+  formatDate(app: IAppointment): string {
+    return new Date(app.dateTime).toLocaleDateString();
+  }
+
+  formatName(app: IAppointment): string {
+    return `${app.name} - ${app.description}`;
+  }
+
+  async calculateAppointments(): Promise<void> {
+    this.loadingAppointments = true;
+    Axios.create()
+      .get<IAppointment[]>(`${this.baseUri}/${this.date}${this.nameParameter}`)
+      .then(response => {
+        this.loadingAppointments = false;
+        this.appointments = response.data;
+        this.generatedAppointmentsDate = this.date;
+        this.generatedAppointmentsName = this.optionalName;
+      });
+  }
+
+  clearAppointments(): void {
+    this.appointments = [];
+  }
+}
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped></style>
