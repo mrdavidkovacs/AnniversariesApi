@@ -109,9 +109,12 @@
                     <v-list-item-title
                       v-text="formatDate(item)"
                     ></v-list-item-title>
-                    <v-list-item-subtitle
-                      v-text="formatName(item)"
-                    ></v-list-item-subtitle>
+                    <v-list-item-subtitle>
+                      {{ item.name }}
+                    </v-list-item-subtitle>
+                    <span class="body-2 font-weight-light">{{
+                      item.description
+                    }}</span>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
@@ -181,10 +184,6 @@ export default class WeddingAnniversaries extends Vue {
 
   formatDate(app: IAppointment): string {
     return new Date(app.dateTime).toLocaleDateString();
-  }
-
-  formatName(app: IAppointment): string {
-    return `${app.name} - ${app.description}`;
   }
 
   async calculateAppointments(): Promise<void> {
