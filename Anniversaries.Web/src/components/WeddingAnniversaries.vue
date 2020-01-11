@@ -5,12 +5,15 @@
         <v-expansion-panel>
           <v-expansion-panel-header
             >Verfügbare Jubiläen
-            <v-progress-circular
-              v-if="loadingAnniversaries"
-              indeterminate
-              color="primary"
-            ></v-progress-circular
-          ></v-expansion-panel-header>
+            <span v-if="loadingAnniversaries" class="ml-2">
+              <v-progress-circular
+                indeterminate
+                color="primary"
+                size="16"
+                width="2"
+              ></v-progress-circular>
+            </span>
+          </v-expansion-panel-header>
 
           <v-expansion-panel-content>
             <v-list disabled v-if="anniversaries && anniversaries.length > 0">
