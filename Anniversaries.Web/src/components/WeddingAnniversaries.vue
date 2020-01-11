@@ -1,7 +1,7 @@
 <template>
   <div class="wedding-anniversaries">
     <div>
-      <v-expansion-panels flat v-model="expandedPanel">
+      <v-expansion-panels v-model="expandedPanel">
         <v-expansion-panel>
           <v-expansion-panel-header
             >Verfügbare Jubiläen
@@ -16,16 +16,21 @@
           </v-expansion-panel-header>
 
           <v-expansion-panel-content>
-            <v-list disabled v-if="anniversaries && anniversaries.length > 0">
+            <v-list
+              disabled
+              dense
+              v-if="anniversaries && anniversaries.length > 0"
+            >
               <v-list-item-group v-model="anniversaries" color="primary">
                 <v-list-item v-for="(item, i) in anniversaries" :key="i">
                   <v-list-item-icon>
                     <v-icon>fas fa-calendar-alt</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title v-text="item.name"></v-list-item-title>
-                    <v-list-item-subtitle v-text="item.description">
-                    </v-list-item-subtitle>
+                    <v-list-item-title>{{ item.name }}</v-list-item-title>
+                    <span class="body-2 font-weight-light">{{
+                      item.description
+                    }}</span>
                   </v-list-item-content>
                 </v-list-item>
               </v-list-item-group>
