@@ -2,19 +2,18 @@
   <div class="wedding-anniversaries">
     <div>
       <v-expansion-panels flat v-model="expandedPanel">
-        <v-expansion-panel v-if="anniversaries && anniversaries.length > 0">
+        <v-expansion-panel>
           <v-expansion-panel-header
-            >Verfügbare Jubiläen</v-expansion-panel-header
-          >
-
-          <v-expansion-panel-content>
+            >Verfügbare Jubiläen
             <v-progress-circular
               v-if="loadingAnniversaries"
               indeterminate
               color="primary"
-            ></v-progress-circular>
+            ></v-progress-circular
+          ></v-expansion-panel-header>
 
-            <v-list disabled>
+          <v-expansion-panel-content>
+            <v-list disabled v-if="anniversaries && anniversaries.length > 0">
               <v-list-item-group v-model="anniversaries" color="primary">
                 <v-list-item v-for="(item, i) in anniversaries" :key="i">
                   <v-list-item-icon>
@@ -138,7 +137,7 @@ export default class WeddingAnniversaries extends Vue {
   private loadingAppointments: boolean = false;
   private appointments: IAppointment[] = [];
 
-  private expandedPanel: number = 0;
+  private expandedPanel: number = 1;
 
   async mounted(): Promise<void> {
     await this.loadAnniversaries();
