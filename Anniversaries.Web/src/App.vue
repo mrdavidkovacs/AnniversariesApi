@@ -35,7 +35,7 @@
 
     <v-footer color="secondary">
       <v-card-text class="py-2 white--text text-right">
-        <strong>{{ version }}</strong>
+        <strong>v{{ version }}</strong>
       </v-card-text>
     </v-footer>
   </v-app>
