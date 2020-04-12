@@ -60,6 +60,11 @@ steps:
     projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
 
+- task: ResharperCli@2
+  inputs:
+    solutionOrProjectPath: '$(Build.SourcesDirectory)/AnniversariesApi.sln'
+    failBuildLevelSelector: 'Warning'
+
 #- task: DotNetCoreCLI@2
 #  displayName: Perform tests and code coverage analysis
 #  inputs:
