@@ -35,6 +35,12 @@
 
     <v-footer color="secondary">
       <v-card-text class="py-2 white--text text-right">
+        <span class="mr-2">
+          <a
+            href="https://github.com/mrdavidkovacs/AnniversariesApi" target="_blank">
+            <v-icon class="fab fa-github" color="#fff"></v-icon>
+          </a>
+        </span>
         <strong>v{{ version }}</strong>
       </v-card-text>
     </v-footer>
