@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +14,11 @@ namespace Anniversaries.Api.Controllers
             string version = Assembly.GetEntryAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 .InformationalVersion;
+
+            if (string.IsNullOrEmpty(version))
+            {
+                throw new InvalidOperationException($"The version should not be null.");
+            }
             
             return this.Ok(version);
         }
