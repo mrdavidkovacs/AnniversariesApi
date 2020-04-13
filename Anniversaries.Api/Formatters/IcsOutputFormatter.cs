@@ -35,26 +35,27 @@ namespace Anniversaries.Api.Formatters
 
         public override Task WriteResponseBodyAsync(OutputFormatterWriteContext context, Encoding selectedEncoding)
         {
-            List<string> contents = new List<string>();
-
-            contents.Add("BEGIN:VCALENDAR");
-            contents.Add("PRODID:https://github.com/mrdavidkovacs/AnniversariesApi ");
-            contents.Add("VERSION:2.0");
-            contents.Add("CALSCALE:GREGORIAN");
-            contents.Add("METHOD:PUBLISH");
-            contents.Add("X-WR-CALNAME:Anniversaries");
+            List<string> contents = new List<string>
+            {
+                "BEGIN:VCALENDAR",
+                "PRODID:https://github.com/mrdavidkovacs/AnniversariesApi",
+                "VERSION:2.0",
+                "CALSCALE:GREGORIAN",
+                "METHOD:PUBLISH",
+                "X-WR-CALNAME:Anniversaries",
+            };
 
             if (context.Object is IEnumerable<Appointment> appointments)
             {
                 foreach (Appointment appointment in appointments)
                 {
-                    this.FormatIcs(contents, appointment);
+                    contents.AddRange(this.FormatIcs(appointment));
                 }
             }
             else
             {
                 Appointment appointment = context.Object as Appointment;
-                this.FormatIcs(contents, appointment);
+                contents.AddRange(this.FormatIcs(appointment));
             }
 
             contents.Add("END:VCALENDAR");
@@ -63,18 +64,18 @@ namespace Anniversaries.Api.Formatters
             return response.WriteAsync(string.Join(Separator, contents));
         }
 
-        private void FormatIcs(List<string> contents, Appointment appointment)
+        private IEnumerable<string> FormatIcs(Appointment appointment)
         {
-            contents.Add("BEGIN:VEVENT");
-            contents.Add($"UID:{Guid.NewGuid():D}");
-            contents.Add("LOCATION:");
-            contents.Add($"SUMMARY:{appointment.Name}");
-            contents.Add($"DESCRIPTION:{appointment.Description}");
-            contents.Add("CLASS:PUBLIC");
-            contents.Add($"DTSTART;VALUE=DATE:{appointment.DateTime:yyyyMMdd}");
-            contents.Add($"DTEND;VALUE=DATE:{appointment.DateTime.AddDays(1):yyyyMMdd}");
-            contents.Add($"DTSTAMP:{DateTime.Now:yyyyMMddTHHmmzzzZ}");
-            contents.Add("END:VEVENT");
+            yield return "BEGIN:VEVENT";
+            yield return $"UID:{Guid.NewGuid():D}";
+            yield return "LOCATION:";
+            yield return $"SUMMARY:{appointment.Name}";
+            yield return $"DESCRIPTION:{appointment.Description}";
+            yield return "CLASS:PUBLIC";
+            yield return $"DTSTART;VALUE=DATE:{appointment.DateTime:yyyyMMdd}";
+            yield return $"DTEND;VALUE=DATE:{appointment.DateTime.AddDays(1):yyyyMMdd}";
+            yield return $"DTSTAMP:{DateTime.Now:yyyyMMddTHHmmzzzZ}";
+            yield return "END:VEVENT";
         }
     }
 }
