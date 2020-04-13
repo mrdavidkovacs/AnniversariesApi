@@ -11,21 +11,24 @@ namespace Anniversaries.Api.Controllers
     [Route("anniversaries/wedding")]
     public class WeddingAnniversaryApiController : ControllerBase
     {
+        private readonly IAnniversaryRepository _repository;
+
+        public WeddingAnniversaryApiController(IAnniversaryRepository repository)
+        {
+            _repository = repository;
+        }
+
         [HttpGet]
         public IActionResult GetBasic()
         {
-            WeddingAnniversaries weddingAnniversaries = new WeddingAnniversaries();
-            
-            return this.Ok(weddingAnniversaries.Get());
+            return this.Ok(_repository.Get());
         }
 
         [FormatFilter]
         [HttpGet("{weddingDate}"), HttpGet("{weddingDate}.{format}")]
         public IActionResult Get([DataType(DataType.Date)] DateTime weddingDate, string name)
         {
-            WeddingAnniversaries weddingAnniversaries = new WeddingAnniversaries();
-
-            Appointment[] appointments = weddingAnniversaries.Get()
+            Appointment[] appointments = _repository.Get()
                 .Select(a => new Appointment(GenerateName(a.Name, name), a.Description, a.CalculateConcreteDate(weddingDate)))
                 .OrderBy(a => a.DateTime)
                 .ToArray();

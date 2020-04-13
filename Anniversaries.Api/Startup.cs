@@ -4,12 +4,16 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using JetBrains.Annotations;
+using Anniversaries.Core;
 
 namespace Anniversaries.Api
 {
+    [UsedImplicitly]
     public class Startup
     {
         // This method gets called by the runtime. Use this method to add services to the container.
+        [UsedImplicitly]
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(options =>
@@ -19,6 +23,8 @@ namespace Anniversaries.Api
                 options.FormatterMappings.SetMediaTypeMappingForFormat("ics", "application/x-ical");
             });
 
+            services.AddTransient<IAnniversaryRepository, WeddingAnniversaries>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Anniversary API", Version = "v1" });
@@ -26,6 +32,7 @@ namespace Anniversaries.Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        [UsedImplicitly]
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

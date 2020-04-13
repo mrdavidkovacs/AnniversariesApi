@@ -8,9 +8,9 @@ namespace Anniversaries.Api.Controllers
     public class AboutApiController : ControllerBase
     {
         [HttpGet("version")]
-        public IActionResult GetBasic()
+        public IActionResult GetVersion()
         {
-            string version = Assembly.GetEntryAssembly()
+            string version = Assembly.GetExecutingAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
                 .InformationalVersion;
             
