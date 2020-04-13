@@ -17,7 +17,7 @@ namespace Anniversaries.Api.Controllers
 
             if (string.IsNullOrEmpty(version))
             {
-                throw new InvalidOperationException($"The version should not be null.");
+                throw new InvalidOperationException("The version should not be null.");
             }
             
             return this.Ok(version);
