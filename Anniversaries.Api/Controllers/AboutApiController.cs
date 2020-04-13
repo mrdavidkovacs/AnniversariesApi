@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +11,7 @@ namespace Anniversaries.Api.Controllers
         public IActionResult GetBasic()
         {
             string version = Assembly.GetEntryAssembly()
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
                 .InformationalVersion ?? string.Empty;
             
             return this.Ok(version);
