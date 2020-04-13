@@ -11,7 +11,7 @@ namespace Anniversaries.Api.Controllers
     [Route("anniversaries/wedding")]
     public class WeddingAnniversaryApiController : ControllerBase
     {
-        private IAnniversaryRepository _repository;
+        private readonly IAnniversaryRepository _repository;
 
         public WeddingAnniversaryApiController(IAnniversaryRepository repository)
         {
