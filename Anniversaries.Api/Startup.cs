@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using JetBrains.Annotations;
+using Anniversaries.Core;
 
 namespace Anniversaries.Api
 {
@@ -21,6 +22,8 @@ namespace Anniversaries.Api
                 // for accessing via URL
                 options.FormatterMappings.SetMediaTypeMappingForFormat("ics", "application/x-ical");
             });
+
+            services.AddTransient<IAnniversaryRepository, WeddingAnniversaries>();
 
             services.AddSwaggerGen(c =>
             {

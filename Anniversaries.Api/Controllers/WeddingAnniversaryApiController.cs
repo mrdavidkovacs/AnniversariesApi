@@ -11,6 +11,13 @@ namespace Anniversaries.Api.Controllers
     [Route("anniversaries/wedding")]
     public class WeddingAnniversaryApiController : ControllerBase
     {
+        private IAnniversaryRepository _repository;
+
+        public WeddingAnniversaryApiController(IAnniversaryRepository repository)
+        {
+            _repository = repository;
+        }
+
         [HttpGet]
         public IActionResult GetBasic()
         {
