@@ -13,12 +13,7 @@ namespace Anniversaries.Api.Controllers
         {
             string version = Assembly.GetEntryAssembly()
                 .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                .InformationalVersion;
-
-            if (string.IsNullOrEmpty(version))
-            {
-                throw new InvalidOperationException("The version should not be null.");
-            }
+                .InformationalVersion ?? string.Empty;
             
             return this.Ok(version);
         }
