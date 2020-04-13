@@ -11,11 +11,11 @@ namespace Anniversaries.Core
             this.Name = name;
         }
 
-        public decimal Years { get; }
-
         public string Name { get; }
 
         public string Description { get; }
+
+        private decimal Years { get; }
 
         public DateTime CalculateConcreteDate(DateTime relevantDate)
         {
