@@ -8,11 +8,11 @@ namespace Anniversaries.Api.Controllers
     public class AboutApiController : ControllerBase
     {
         [HttpGet("version")]
-        public IActionResult GetBasic()
+        public IActionResult GetVersion()
         {
-            string version = Assembly.GetEntryAssembly()
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()?
-                .InformationalVersion ?? string.Empty;
+            string version = Assembly.GetExecutingAssembly()
+                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+                .InformationalVersion;
             
             return this.Ok(version);
         }
