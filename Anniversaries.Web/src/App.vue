@@ -13,11 +13,6 @@
           <v-tabs class="elevation-2" dark v-bind:centered="true">
             <v-tabs-slider></v-tabs-slider>
 
-            <v-tab>
-              <v-icon class="mr-2">fas fa-calendar-alt</v-icon>
-              Home
-            </v-tab>
-
             <v-tab
               v-for="type in anniversaryTypes"
               v-bind:key="type.internalName"
@@ -25,8 +20,6 @@
               <v-icon class="mr-2">{{ type.iconName }}</v-icon>
               {{ type.name }}
             </v-tab>
-
-            <v-tab-item></v-tab-item>
 
             <v-tab-item
               v-for="type in anniversaryTypes"
