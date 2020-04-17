@@ -1,5 +1,5 @@
 <template>
-  <div class="wedding-anniversaries">
+  <div class="special-anniversaries">
     <div>
       <v-expansion-panels v-model="expandedPanel">
         <v-expansion-panel>
@@ -55,7 +55,7 @@
               <template v-slot:activator="{ on }">
                 <v-text-field
                   v-model="computedDateFormatted"
-                  label="Hochzeitsdatum"
+                  v-bind:label="type.dateHint"
                   persistent-hint
                   readonly
                   v-on="on"
@@ -71,7 +71,7 @@
 
             <v-text-field
               label="Name (optional)"
-              placeholder="z.B.: Standesamt"
+              v-bind:placeholder="'z.B.: ' + this.type.optionalNameHint"
               v-model="optionalName"
             ></v-text-field>
 
@@ -107,7 +107,7 @@
                   </v-list-item-icon>
                   <v-list-item-content>
                     <v-list-item-title
-                      v-text="formatDate(item)"
+                      v-text="formatAppointmentDate(item)"
                     ></v-list-item-title>
                     <v-list-item-subtitle>
                       {{ item.name }}
@@ -131,16 +131,18 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 import Axios from "axios";
 import IAnniversary from "../models/Anniversary";
 import IAppointment from "../models/Appointment";
+import IAnniversaryType from "../models/AnniversaryType";
 
 @Component
-export default class WeddingAnniversaries extends Vue {
-  private baseUri: string = "/anniversaries/wedding";
+export default class SpecialAnniversaries extends Vue {
+  @Prop({ required: true })
+  type!: IAnniversaryType;
 
   private anniversaries: IAnniversary[] = [];
   private loadingAnniversaries: boolean = false;
 
   private menu: boolean = false;
-  private date: string = "2016-07-16";
+  private date: string;
   private optionalName: string = "";
   private generatedAppointmentsDate: string = "";
   private generatedAppointmentsName: string = "";
@@ -150,6 +152,11 @@ export default class WeddingAnniversaries extends Vue {
 
   private expandedPanel: number = 1;
 
+  constructor() {
+    super();
+    this.date = `${this.type.defaultDate.getFullYear()}-${this.type.defaultDate.getMonth()}-${this.type.defaultDate.getDate()}`;
+  }
+
   async mounted(): Promise<void> {
     await this.loadAnniversaries();
   }
@@ -157,15 +164,27 @@ export default class WeddingAnniversaries extends Vue {
   async loadAnniversaries(): Promise<void> {
     this.loadingAnniversaries = true;
     Axios.create()
-      .get<IAnniversary[]>(`${this.baseUri}`)
+      .get<IAnniversary[]>(this.baseUri)
       .then(response => {
         this.loadingAnniversaries = false;
         this.anniversaries = response.data;
       });
   }
 
-  get computedDateFormatted(): string {
-    return new Date(this.date).toLocaleDateString();
+  async calculateAppointments(): Promise<void> {
+    this.loadingAppointments = true;
+    Axios.create()
+      .get<IAppointment[]>(`${this.baseUri}/${this.date}${this.nameParameter}`)
+      .then(response => {
+        this.loadingAppointments = false;
+        this.appointments = response.data;
+        this.generatedAppointmentsDate = this.date;
+        this.generatedAppointmentsName = this.optionalName;
+      });
+  }
+
+  get baseUri(): string {
+    return `/anniversaries/${this.type.internalName}`;
   }
 
   get nameParameter(): string {
@@ -182,20 +201,16 @@ export default class WeddingAnniversaries extends Vue {
     return dateIsSame && nameIsSame ? "primary" : "orange";
   }
 
-  formatDate(app: IAppointment): string {
-    return new Date(app.dateTime).toLocaleDateString();
+  get computedDateFormatted(): string {
+    return this.formatDate(this.date);
   }
 
-  async calculateAppointments(): Promise<void> {
-    this.loadingAppointments = true;
-    Axios.create()
-      .get<IAppointment[]>(`${this.baseUri}/${this.date}${this.nameParameter}`)
-      .then(response => {
-        this.loadingAppointments = false;
-        this.appointments = response.data;
-        this.generatedAppointmentsDate = this.date;
-        this.generatedAppointmentsName = this.optionalName;
-      });
+  formatAppointmentDate(app: IAppointment): string {
+    return this.formatDate(app.dateTime);
+  }
+
+  formatDate(date: Date | string): string {
+    return new Date(date).toLocaleDateString();
   }
 
   clearAppointments(): void {

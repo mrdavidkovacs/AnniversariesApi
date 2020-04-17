@@ -10,24 +10,30 @@
     <v-content>
       <v-container>
         <div class="w-80">
-          <v-tabs class="elevation-2" dark centered="true">
+          <v-tabs class="elevation-2" dark v-bind:centered="true">
             <v-tabs-slider></v-tabs-slider>
 
             <v-tab>
-              <v-icon class="mr-2">$wedding</v-icon>
-              Hochzeit
-            </v-tab>
-
-            <v-tab>
               <v-icon class="mr-2">fas fa-calendar-alt</v-icon>
-              Information
+              Home
             </v-tab>
 
-            <v-tab-item>
-              <WeddingAnniversaries />
-            </v-tab-item>
+            <v-tab
+              v-for="type in anniversaryTypes"
+              v-bind:key="type.internalName"
+            >
+              <v-icon class="mr-2">{{ type.iconName }}</v-icon>
+              {{ type.name }}
+            </v-tab>
 
             <v-tab-item></v-tab-item>
+
+            <v-tab-item
+              v-for="type in anniversaryTypes"
+              v-bind:key="type.internalName"
+            >
+              <SpecialAnniversaries v-bind:type="type" />
+            </v-tab-item>
           </v-tabs>
         </div>
       </v-container>
@@ -37,7 +43,9 @@
       <v-card-text class="py-2 white--text text-right">
         <span class="mr-2">
           <a
-            href="https://github.com/mrdavidkovacs/AnniversariesApi" target="_blank">
+            href="https://github.com/mrdavidkovacs/AnniversariesApi"
+            target="_blank"
+          >
             <v-icon class="fab fa-github" color="#fff"></v-icon>
           </a>
         </span>
@@ -49,18 +57,20 @@
 
 <script lang="ts">
 import Vue from "vue";
-import WeddingAnniversaries from "./components/WeddingAnniversaries.vue";
+import SpecialAnniversaries from "./components/SpecialAnniversaries.vue";
+import IAnniversaryType from "./models/AnniversaryType";
 import Axios from "axios";
 
 export default Vue.extend({
   name: "App",
 
   components: {
-    WeddingAnniversaries
+    SpecialAnniversaries
   },
 
   data: () => ({
-    version: ""
+    version: "" as String,
+    anniversaryTypes: [] as IAnniversaryType[]
   }),
 
   mounted() {
@@ -69,6 +79,17 @@ export default Vue.extend({
       .then(response => {
         this.version = response.data;
       });
+
+    this.anniversaryTypes = [
+      {
+        name: "Hochzeit",
+        dateHint: "Hochzeitsdatum",
+        optionalNameHint: "Standesamt",
+        internalName: "wedding",
+        defaultDate: new Date("2016-07-16"),
+        iconName: "$wedding"
+      } as IAnniversaryType
+    ];
   }
 });
 </script>
