@@ -25,7 +25,8 @@ namespace Anniversaries.Api.Controllers
         }
 
         [FormatFilter]
-        [HttpGet("{weddingDate}"), HttpGet("{weddingDate}.{format}")]
+        [HttpGet("{weddingDate}")]
+        [HttpGet("{weddingDate}.{format}")]
         public IActionResult Get([DataType(DataType.Date)] DateTime weddingDate, string name)
         {
             Appointment[] appointments = _repository.Get()
