@@ -45,6 +45,10 @@
         <strong>v{{ version }}</strong>
       </v-card-text>
     </v-footer>
+
+    <v-overlay :value="loading">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </v-app>
 </template>
 
@@ -62,6 +66,7 @@ export default Vue.extend({
   },
 
   data: () => ({
+    loading: true,
     version: "" as String,
     anniversaryTypes: [] as IAnniversaryType[]
   }),
@@ -76,6 +81,7 @@ export default Vue.extend({
 
     this.version = versionRequest.data;
     this.anniversaryTypes = typesRequest.data;
+    this.loading = false;
   }
 });
 </script>
