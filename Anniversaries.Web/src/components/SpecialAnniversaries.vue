@@ -128,7 +128,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import Axios from "axios";
+import Axios, { AxiosInstance } from "axios";
 import IAnniversary from "../models/Anniversary";
 import IAppointment from "../models/Appointment";
 import IAnniversaryType from "../models/AnniversaryType";
@@ -141,6 +141,7 @@ export default class SpecialAnniversaries extends Vue {
   private anniversaries: IAnniversary[] = [];
   private loadingAnniversaries: boolean = false;
 
+  private axios: AxiosInstance;
   private menu: boolean = false;
   private date: string;
   private optionalName: string = "";
@@ -154,7 +155,9 @@ export default class SpecialAnniversaries extends Vue {
 
   constructor() {
     super();
-    this.date = `${this.type.defaultDate.getFullYear()}-${this.type.defaultDate.getMonth()}-${this.type.defaultDate.getDate()}`;
+    const d = new Date(this.type.defaultDate);
+    this.date = `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+    this.axios = Axios.create();
   }
 
   async mounted(): Promise<void> {
@@ -163,17 +166,15 @@ export default class SpecialAnniversaries extends Vue {
 
   async loadAnniversaries(): Promise<void> {
     this.loadingAnniversaries = true;
-    Axios.create()
-      .get<IAnniversary[]>(this.baseUri)
-      .then(response => {
-        this.loadingAnniversaries = false;
-        this.anniversaries = response.data;
-      });
+    this.axios.get<IAnniversary[]>(this.baseUri).then(response => {
+      this.loadingAnniversaries = false;
+      this.anniversaries = response.data;
+    });
   }
 
   async calculateAppointments(): Promise<void> {
     this.loadingAppointments = true;
-    Axios.create()
+    this.axios
       .get<IAppointment[]>(`${this.baseUri}/${this.date}${this.nameParameter}`)
       .then(response => {
         this.loadingAppointments = false;
