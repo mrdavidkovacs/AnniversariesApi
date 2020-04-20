@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Anniversaries.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,8 @@ namespace Anniversaries.Api.Controllers
         [HttpGet]
         public IActionResult GetTypes()
         {
-            return this.Ok(_typesRepository.GetTypes().ToArray());
+            AnniversaryType[] types = _typesRepository.GetTypes().ToArray();
+            return this.Ok(types);
         }
     }
 }

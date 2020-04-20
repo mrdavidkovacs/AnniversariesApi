@@ -3,5 +3,6 @@
     public enum AnniversaryTypes
     {
         Wedding,
+        Birthday,
     }
 }

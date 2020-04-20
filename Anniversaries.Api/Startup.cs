@@ -26,7 +26,6 @@ namespace Anniversaries.Api
             });
             
             services.AddTransient<IAnniversaryTypesRepository, AnniversaryTypesRepository>();
-            services.AddTransient<IAnniversaryRepositoryFactory, AnniversaryRepositoryFactory>();
 
             services.AddControllers()
                 .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)));
