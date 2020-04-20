@@ -7,7 +7,7 @@ namespace Anniversaries.Core
     {
         public IEnumerable<AnniversaryType> GetTypes()
         {
-            yield return new AnniversaryType("Hochzeit", "Hochzeitsdatum", "Standesamt", "wedding", "$wedding", new DateTime(2016, 07, 16));
+            yield return new AnniversaryType("Hochzeit", "Hochzeitsdatum", "Standesamt", AnniversaryTypes.Wedding, "$wedding", new DateTime(2016, 07, 16));
         }
     }
 }

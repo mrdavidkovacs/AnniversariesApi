@@ -4,7 +4,7 @@ namespace Anniversaries.Core
 {
     public class AnniversaryType
     {
-        public AnniversaryType(string name, string dateHint, string optionalNameHint, string internalName, string iconName, DateTime defaultDate)
+        public AnniversaryType(string name, string dateHint, string optionalNameHint, AnniversaryTypes internalName, string iconName, DateTime defaultDate)
         {
             this.Name = name;
             this.DateHint = dateHint;
@@ -20,7 +20,7 @@ namespace Anniversaries.Core
 
         public string OptionalNameHint { get; }
 
-        public string InternalName { get; }
+        public AnniversaryTypes InternalName { get; }
 
         public string IconName { get; }
 

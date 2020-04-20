@@ -1,3 +1,5 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Anniversaries.Api.Formatters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,9 +24,12 @@ namespace Anniversaries.Api
                 // for accessing via URL
                 options.FormatterMappings.SetMediaTypeMappingForFormat("ics", "application/x-ical");
             });
-
+            
             services.AddTransient<IAnniversaryRepository, WeddingAnniversaries>();
             services.AddTransient<IAnniversaryTypesRepository, AnniversaryTypesRepository>();
+
+            services.AddControllers()
+                .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)));
 
             services.AddSwaggerGen(c =>
             {
