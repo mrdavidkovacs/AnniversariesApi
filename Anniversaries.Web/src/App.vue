@@ -76,7 +76,7 @@ export default Vue.extend({
 
     let [versionRequest, typesRequest] = await Promise.all([
       axios.get<string>("about/version"),
-      axios.get<IAnniversaryType[]>("anniversaries")
+      axios.get<IAnniversaryType[]>("anniversary-types")
     ]);
 
     this.version = versionRequest.data;

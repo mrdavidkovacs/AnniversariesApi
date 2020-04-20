@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Anniversaries.Core;
 using Microsoft.AspNetCore.Mvc;
@@ -7,22 +5,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace Anniversaries.Api.Controllers
 {
     [ApiController]
-    [Route("anniversaries")]
+    [Route("anniversary-types")]
     public class AnniversaryTypesApiController : ControllerBase
     {
-        public AnniversaryTypesApiController()
+        private readonly IAnniversaryTypesRepository _typesRepository;
+
+        public AnniversaryTypesApiController(IAnniversaryTypesRepository typesRepository)
         {
+            _typesRepository = typesRepository;
         }
 
         [HttpGet]
         public IActionResult GetTypes()
         {
-            return this.Ok(this.GetTypesInternal().ToArray());
-        }
-
-        private IEnumerable<AnniversaryType> GetTypesInternal()
-        {
-            yield return new AnniversaryType("Hochzeit", "Hochzeitsdatum", "Standesamt", "wedding", "$wedding", new DateTime(2016, 07, 16));
+            return this.Ok(_typesRepository.GetTypes().ToArray());
         }
     }
 }
