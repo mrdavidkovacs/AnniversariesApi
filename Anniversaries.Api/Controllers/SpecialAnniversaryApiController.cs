@@ -11,9 +11,9 @@ namespace Anniversaries.Api.Controllers
     [Route("anniversaries")]
     public class SpecialAnniversaryApiController : ControllerBase
     {
-        private readonly IAnniversaryRepositoryFactory _factory;
+        private readonly IAnniversaryTypesRepository _factory;
 
-        public SpecialAnniversaryApiController(IAnniversaryRepositoryFactory factory)
+        public SpecialAnniversaryApiController(IAnniversaryTypesRepository factory)
         {
             _factory = factory;
         }
@@ -21,8 +21,8 @@ namespace Anniversaries.Api.Controllers
         [HttpGet("{type}")]
         public IActionResult GetAvailableAnniversaries(AnniversaryTypes type)
         {
-            IAnniversaryRepository repository = _factory.GetRepository(type);
-            return this.Ok(repository.Get());
+            IAnniversaryRepository repository = _factory.GetByType(type);
+            return this.Ok(repository.GetAnniversaries());
         }
 
         [FormatFilter]
@@ -30,9 +30,9 @@ namespace Anniversaries.Api.Controllers
         [HttpGet("{type}/{date}.{format}")]
         public IActionResult Get(AnniversaryTypes type, [DataType(DataType.Date)] DateTime date, string name)
         {
-            IAnniversaryRepository repository = _factory.GetRepository(type);
+            IAnniversaryRepository repository = _factory.GetByType(type);
 
-            Appointment[] appointments = repository.Get()
+            Appointment[] appointments = repository.GetAnniversaries()
                 .Select(a => new Appointment(GenerateName(a.Name, name), a.Description, a.CalculateConcreteDate(date)))
                 .OrderBy(a => a.DateTime)
                 .ToArray();

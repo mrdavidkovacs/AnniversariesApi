@@ -20,7 +20,6 @@ namespace Anniversaries.Api.Controllers
         public IActionResult GetTypes()
         {
             AnniversaryType[] types = _typesRepository.GetTypes().ToArray();
-            Console.WriteLine(string.Join(Environment.NewLine, types.Select(a => a.DefaultDate)));
             return this.Ok(types);
         }
     }

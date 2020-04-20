@@ -4,6 +4,8 @@ namespace Anniversaries.Core
 {
     public interface IAnniversaryRepository
     {
-        IEnumerable<Anniversary> Get();
+        AnniversaryType GetAnniversaryType();
+
+        IEnumerable<Anniversary> GetAnniversaries();
     }
 }

@@ -1,10 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Anniversaries.Core
 {
     public class WeddingAnniversaries : IAnniversaryRepository
     {
-        public IEnumerable<Anniversary> Get()
+        public AnniversaryType GetAnniversaryType()
+        {
+            return new AnniversaryType("Hochzeit", "Hochzeitsdatum", "Standesamt", AnniversaryTypes.Wedding, "$wedding", new DateTime(2016, 07, 16));
+        }
+
+        public IEnumerable<Anniversary> GetAnniversaries()
         {
             yield return new Anniversary("Grüne Hochzeit", 0m, "Tag der Trauung");
             yield return new Anniversary("Bier Hochzeit (9 Monate)", 0.75m, "Traditionell wird die Bierhochzeit nur dann gefeiert, wenn die Frau nach neun Monaten noch nicht schwanger ist, denn der Bierkonsum soll die Fruchtbarkeit erhöhen; allerdings nur, wenn das Bier in Maßen genossen wird. (https://de.wikipedia.org/wiki/Bierhochzeit)");
