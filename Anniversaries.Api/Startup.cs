@@ -25,8 +25,8 @@ namespace Anniversaries.Api
                 options.FormatterMappings.SetMediaTypeMappingForFormat("ics", "application/x-ical");
             });
             
-            services.AddTransient<IAnniversaryRepository, WeddingAnniversaries>();
             services.AddTransient<IAnniversaryTypesRepository, AnniversaryTypesRepository>();
+            services.AddTransient<IAnniversaryRepositoryFactory, AnniversaryRepositoryFactory>();
 
             services.AddControllers()
                 .AddJsonOptions(opt => opt.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)));

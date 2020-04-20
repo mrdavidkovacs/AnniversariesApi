@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Anniversaries.Api.Controllers
 {
     [ApiController]
-    [Route("anniversaries")]
+    [Route("anniversary-types")]
     public class AnniversaryTypesApiController : ControllerBase
     {
         private readonly IAnniversaryTypesRepository _typesRepository;
