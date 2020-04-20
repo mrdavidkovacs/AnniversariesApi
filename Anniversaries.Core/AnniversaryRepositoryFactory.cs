@@ -11,6 +11,9 @@ namespace Anniversaries.Core
                 case AnniversaryTypes.Wedding:
                     return new WeddingAnniversaries();
 
+                case AnniversaryTypes.Birthday:
+                    return new BirthdayAnniversaries();
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
