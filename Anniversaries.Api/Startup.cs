@@ -24,6 +24,7 @@ namespace Anniversaries.Api
             });
 
             services.AddTransient<IAnniversaryRepository, WeddingAnniversaries>();
+            services.AddTransient<IAnniversaryTypesRepository, AnniversaryTypesRepository>();
 
             services.AddSwaggerGen(c =>
             {
