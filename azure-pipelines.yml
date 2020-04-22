@@ -40,12 +40,14 @@ steps:
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Api"
   failOnStderr: true
 
-- script: |
-    npm install
-    npm run build
+- script: npm install
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
   failOnStderr: true
-  
+  displayName: Pull NPM packages
+
+- script: npm run build
+  workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
+  failOnStderr: true
   displayName: Build FE
 
 - task: UseDotNet@2
