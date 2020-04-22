@@ -46,7 +46,6 @@ steps:
 
 - script: npm run build
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
-  failOnStderr: true
   displayName: Build FE
 
 - task: UseDotNet@2
