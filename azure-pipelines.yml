@@ -35,26 +35,33 @@ steps:
     Field: 'Version'
     OutputVersion: 'OutputedVersion'
 
-- script: |
-    cd Anniversaries.Web
-    npm install
-    npm run build
-    cd ..
+- script: 'echo -e "$(Build.Repository.Uri)\n$(Build.SourceVersion)\n$(Build.BuildNumber)" > .buildinfo.json'
+  displayName: "Write Build Information"
+  workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Api"
+  failOnStderr: true
+
+- script: npm install
+  workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
+  displayName: Pull NPM packages
+
+- script: npm run build
+  workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
   displayName: Build FE
 
 - task: UseDotNet@2
+  displayName: Install dotnetcore sdk
   inputs:
     packageType: 'sdk'
     version: '3.x'
 
 - task: DotNetCoreCLI@2
-  displayName: Restore packages
+  displayName: Restore nuget packages
   inputs:
     command: restore
     projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
-  displayName: Build
+  displayName: Build application
   inputs:
     command: build
     projects: '**/*.csproj'
@@ -82,6 +89,7 @@ steps:
     zipAfterPublish: True
 
 - task: PublishBuildArtifacts@1
+  displayName: Publish as drop
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
     artifactName: 'drop'

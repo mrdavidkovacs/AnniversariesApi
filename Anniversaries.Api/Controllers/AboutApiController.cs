@@ -1,4 +1,4 @@
-using System.Reflection;
+using Anniversaries.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Anniversaries.Api.Controllers
@@ -7,14 +7,17 @@ namespace Anniversaries.Api.Controllers
     [Route("about")]
     public class AboutApiController : ControllerBase
     {
-        [HttpGet("version")]
-        public IActionResult GetVersion()
+        private readonly BuildInformation _buildInformation;
+
+        public AboutApiController(BuildInformation buildInformation)
         {
-            string version = Assembly.GetExecutingAssembly()
-                .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-                .InformationalVersion;
-            
-            return this.Ok(version);
+            _buildInformation = buildInformation;
+        }
+
+        [HttpGet("information")]
+        public IActionResult GetInformation()
+        {
+            return this.Ok(_buildInformation);
         }
     }
 }

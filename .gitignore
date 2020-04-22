@@ -362,3 +362,5 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+.buildinfo.json

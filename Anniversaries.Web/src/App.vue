@@ -35,14 +35,11 @@
     <v-footer color="secondary">
       <v-card-text class="py-2 white--text text-right">
         <span class="mr-2">
-          <a
-            href="https://github.com/mrdavidkovacs/AnniversariesApi"
-            target="_blank"
-          >
+          <a :href="repositoryUrl" target="_blank">
             <v-icon class="fab fa-github" color="#fff"></v-icon>
           </a>
         </span>
-        <strong>v{{ version }}</strong>
+        <strong>{{ versionString }}</strong>
       </v-card-text>
     </v-footer>
 
@@ -56,6 +53,7 @@
 import Vue from "vue";
 import SpecialAnniversaries from "./components/SpecialAnniversaries.vue";
 import IAnniversaryType from "./models/AnniversaryType";
+import IBuildInformation from "./models/BuildInformation";
 import Axios from "axios";
 
 export default Vue.extend({
@@ -67,20 +65,34 @@ export default Vue.extend({
 
   data: () => ({
     loading: true,
-    version: "" as String,
+    versionString: "" as string,
+    repositoryUrl: "" as string,
     anniversaryTypes: [] as IAnniversaryType[]
   }),
 
   async mounted() {
     const axios = Axios.create();
 
-    let [versionRequest, typesRequest] = await Promise.all([
-      axios.get<string>("about/version"),
+    let [buildInformationRequest, typesRequest] = await Promise.all([
+      axios.get<IBuildInformation>("about/information"),
       axios.get<IAnniversaryType[]>("anniversary-types")
     ]);
 
-    this.version = versionRequest.data;
+    const buildInformation: IBuildInformation = buildInformationRequest.data;
     this.anniversaryTypes = typesRequest.data;
+
+    this.repositoryUrl = buildInformation.repositoryUrl;
+
+    if (buildInformation.commitShortHash != null) {
+      this.versionString =
+        "v" +
+        buildInformation.version +
+        " @ " +
+        buildInformation.commitShortHash;
+    } else {
+      this.versionString = "v" + buildInformation.version;
+    }
+
     this.loading = false;
   }
 });
