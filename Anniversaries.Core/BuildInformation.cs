@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+
 namespace Anniversaries.Core
 {
     public class BuildInformation
@@ -10,9 +12,16 @@ namespace Anniversaries.Core
             this.RepositoryUrl = repositoryUrl;
         }
 
+        [PublicAPI]
         public string Version { get; }
+
+        [PublicAPI]
         public string CommitHash { get; }
+
+        [PublicAPI]
         public string RepositoryUrl { get; }
+
+        [PublicAPI]
         public string CommitShortHash { get; }
     }
 }

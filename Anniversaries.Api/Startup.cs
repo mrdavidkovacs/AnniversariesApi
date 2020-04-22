@@ -27,7 +27,7 @@ namespace Anniversaries.Api
 
             BuildInformationProvider informationProvider = new BuildInformationProvider();
             
-            services.AddSingleton<BuildInformation>(informationProvider.GetBuildInformation());
+            services.AddSingleton(informationProvider.GetBuildInformation());
             services.AddTransient<IAnniversaryTypesRepository, AnniversaryTypesRepository>();
 
             services.AddControllers()

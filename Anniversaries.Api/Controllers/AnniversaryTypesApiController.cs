@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Anniversaries.Core;
 using Microsoft.AspNetCore.Mvc;

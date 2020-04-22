@@ -1,4 +1,5 @@
 using System;
+using JetBrains.Annotations;
 
 namespace Anniversaries.Core
 {
@@ -14,16 +15,22 @@ namespace Anniversaries.Core
             this.DefaultDate = defaultDate;
         }
 
+        [PublicAPI]
         public string Name { get; }
 
+        [PublicAPI]
         public string DateHint { get; }
 
+        [PublicAPI]
         public string OptionalNameHint { get; }
 
+        [PublicAPI]
         public AnniversaryTypes InternalName { get; }
 
+        [PublicAPI]
         public string IconName { get; }
 
+        [PublicAPI]
         public DateTime DefaultDate { get; }
     }
 }
