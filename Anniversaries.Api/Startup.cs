@@ -24,7 +24,10 @@ namespace Anniversaries.Api
                 // for accessing via URL
                 options.FormatterMappings.SetMediaTypeMappingForFormat("ics", "application/x-ical");
             });
+
+            BuildInformationProvider informationProvider = new BuildInformationProvider();
             
+            services.AddSingleton<BuildInformation>(informationProvider.GetBuildInformation());
             services.AddTransient<IAnniversaryTypesRepository, AnniversaryTypesRepository>();
 
             services.AddControllers()
