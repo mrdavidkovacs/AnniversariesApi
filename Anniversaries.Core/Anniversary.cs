@@ -5,8 +5,13 @@ namespace Anniversaries.Core
     public class Anniversary
     {
         public Anniversary(string name, decimal years, string description)
+            : this(name, Duration.FromYears(years), description)
         {
-            this.Years = years;
+        }
+
+        public Anniversary(string name, Duration duration, string description)
+        {
+            this.Duration = duration;
             this.Description = description;
             this.Name = name;
         }
@@ -15,11 +20,11 @@ namespace Anniversaries.Core
 
         public string Description { get; }
 
-        private decimal Years { get; }
+        public Duration Duration { get; }
 
         public DateTime CalculateConcreteDate(DateTime relevantDate)
         {
-            return relevantDate.AddMonths((int) (this.Years * 12));
+            return this.Duration.CalculateConcreteDate(relevantDate);
         }
     }
 }
