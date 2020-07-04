@@ -22,7 +22,12 @@ namespace Anniversaries.Api.Controllers
         public IActionResult GetAvailableAnniversaries(AnniversaryTypes type)
         {
             IAnniversaryRepository repository = _factory.GetByType(type);
-            return this.Ok(repository.GetAnniversaries());
+
+            Anniversary[] anniversaries = repository.GetAnniversaries()
+                .OrderBy(a => a.Duration)
+                .ToArray();
+
+            return this.Ok(anniversaries);
         }
 
         [FormatFilter]
