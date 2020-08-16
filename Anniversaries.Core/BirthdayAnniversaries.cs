@@ -80,7 +80,7 @@ namespace Anniversaries.Core
 
             if (number % roundEveryX == 0)
             {
-                reasons.Add("Eine Runder.");
+                reasons.Add($"Durch {roundEveryX} teilbar.");
             }
 
             if (number.ToString().Distinct().Count() == 1)
