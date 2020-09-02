@@ -2,7 +2,7 @@ image: gitpod/workspace-dotnet
 
 tasks:
   - init: cd Anniversaries.Web && npm install && cd .. && dotnet restore
-    command: cd Anniversaries.Web && npm run build && cd .. && dotnet run
+    command: cd Anniversaries.Web && npm run build && cd .. && dotnet run --project Anniversaries.Api
 
 vscode:
   extensions:
