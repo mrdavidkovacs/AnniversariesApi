@@ -1,0 +1,9 @@
+image: gitpod/workspace-dotnet
+
+tasks:
+  - init: cd Anniversaries.Web && npm install && cd .. && dotnet restore
+    command: cd Anniversaries.Web && npm run build && cd .. && dotnet run --project Anniversaries.Api
+
+vscode:
+  extensions:
+    - octref.vetur@0.26.1:NrU4ZTLY6IF/1G6B/QLuIQ==
