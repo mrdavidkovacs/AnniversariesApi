@@ -9,6 +9,8 @@
     "watch": "vue-cli-service build --watch"
   },
   "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
     "axios": "^0.20.0",
     "core-js": "^3.6.5",
     "register-service-worker": "^1.7.1",
