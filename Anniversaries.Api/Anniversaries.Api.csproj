@@ -4,7 +4,7 @@
     <Version>0.0.0-development</Version>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.3.1"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
     <PackageReference Include="JetBrains.Annotations" Version="2020.1.0"/>
   </ItemGroup>
   <ItemGroup>
