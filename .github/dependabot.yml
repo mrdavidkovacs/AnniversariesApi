@@ -9,13 +9,16 @@ updates:
     directory: "/Anniversaries.Web"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
 
   - package-ecosystem: "nuget"
     directory: "/Anniversaries.Core"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
 
   - package-ecosystem: "nuget"
     directory: "/Anniversaries.Api"
     schedule:
       interval: "weekly"
+    open-pull-requests-limit: 10
