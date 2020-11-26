@@ -52,7 +52,7 @@ steps:
   displayName: Install dotnetcore sdk
   inputs:
     packageType: 'sdk'
-    version: '3.x'
+    version: '5.x'
 
 - task: DotNetCoreCLI@2
   displayName: Restore nuget packages
