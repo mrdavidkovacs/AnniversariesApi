@@ -40,18 +40,16 @@ jobs:
         with:
           node-version: '14'
 
-      - name: Install NPM
-        run: npm install
+      - run: npm install
         working-directory: Anniversaries.Web
 
-      - name: Build FE
-        run: npm run build
+      - run: npm run build
         working-directory: Anniversaries.Web
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: '5.x'
+          dotnet-version: '5.0.x'
 
       - name: Build API
         run: dotnet build AnniversariesApi.sln
