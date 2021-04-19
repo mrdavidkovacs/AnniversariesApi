@@ -8,17 +8,17 @@ updates:
   - package-ecosystem: "npm"
     directory: "/Anniversaries.Web"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "nuget"
     directory: "/Anniversaries.Core"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 10
 
   - package-ecosystem: "nuget"
     directory: "/Anniversaries.Api"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
     open-pull-requests-limit: 10
