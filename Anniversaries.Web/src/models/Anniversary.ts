@@ -1,5 +1,5 @@
 export default interface IAnniversary {
-    years: number;
-    name: string;
-    description: string;
+  years: number;
+  name: string;
+  description: string;
 }

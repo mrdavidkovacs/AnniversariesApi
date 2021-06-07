@@ -166,7 +166,7 @@ export default class SpecialAnniversaries extends Vue {
 
   async loadAnniversaries(): Promise<void> {
     this.loadingAnniversaries = true;
-    this.axios.get<IAnniversary[]>(this.baseUri).then(response => {
+    this.axios.get<IAnniversary[]>(this.baseUri).then((response) => {
       this.loadingAnniversaries = false;
       this.anniversaries = response.data;
     });
@@ -176,7 +176,7 @@ export default class SpecialAnniversaries extends Vue {
     this.loadingAppointments = true;
     this.axios
       .get<IAppointment[]>(`${this.baseUri}/${this.date}${this.nameParameter}`)
-      .then(response => {
+      .then((response) => {
         this.loadingAppointments = false;
         this.appointments = response.data;
         this.generatedAppointmentsDate = this.date;

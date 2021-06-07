@@ -1,6 +1,6 @@
 export default interface IBuildInformation {
-    version: string;
-    commitHash: string;
-    commitShortHash: string;
-    repositoryUrl: string;
+  version: string;
+  commitHash: string;
+  commitShortHash: string;
+  repositoryUrl: string;
 }

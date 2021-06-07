@@ -7,7 +7,7 @@
       </div>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container>
         <div class="w-80">
           <v-tabs class="elevation-2" dark v-bind:centered="true">
@@ -30,7 +30,7 @@
           </v-tabs>
         </div>
       </v-container>
-    </v-content>
+    </v-main>
 
     <v-footer color="secondary">
       <v-card-text class="py-2 white--text text-right">
@@ -60,14 +60,14 @@ export default Vue.extend({
   name: "App",
 
   components: {
-    SpecialAnniversaries
+    SpecialAnniversaries,
   },
 
   data: () => ({
     loading: true,
     versionString: "" as string,
     repositoryUrl: "" as string,
-    anniversaryTypes: [] as IAnniversaryType[]
+    anniversaryTypes: [] as IAnniversaryType[],
   }),
 
   async mounted() {
@@ -75,7 +75,7 @@ export default Vue.extend({
 
     let [buildInformationRequest, typesRequest] = await Promise.all([
       axios.get<IBuildInformation>("about/information"),
-      axios.get<IAnniversaryType[]>("anniversary-types")
+      axios.get<IAnniversaryType[]>("anniversary-types"),
     ]);
 
     const buildInformation: IBuildInformation = buildInformationRequest.data;
@@ -94,6 +94,6 @@ export default Vue.extend({
     }
 
     this.loading = false;
-  }
+  },
 });
 </script>
