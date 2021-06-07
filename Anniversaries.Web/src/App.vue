@@ -7,7 +7,7 @@
       </div>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container>
         <div class="w-80">
           <v-tabs class="elevation-2" dark v-bind:centered="true">
@@ -30,7 +30,7 @@
           </v-tabs>
         </div>
       </v-container>
-    </v-content>
+    </v-main>
 
     <v-footer color="secondary">
       <v-card-text class="py-2 white--text text-right">
