@@ -8,14 +8,14 @@ Vue.use(Vuetify);
 export default new Vuetify({
   lang: {
     locales: { de },
-    current: "de"
+    current: "de",
   },
   icons: {
     iconfont: "fa",
     values: {
       wedding: {
-        component: WeddingIcon
-      }
-    }
-  }
+        component: WeddingIcon,
+      },
+    },
+  },
 });

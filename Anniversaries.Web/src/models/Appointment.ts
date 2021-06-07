@@ -1,5 +1,5 @@
 export default interface IAppointment {
-    dateTime: Date;
-    name: string;
-    description: string;
+  dateTime: Date;
+  name: string;
+  description: string;
 }

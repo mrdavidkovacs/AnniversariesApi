@@ -1,5 +1,5 @@
 {
-  "compilerOptions": {    
+  "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -10,13 +10,15 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "baseUrl": ".","typeRoots": [
+    "baseUrl": ".",
+    "typeRoots": [
       "./node_modules/@types",
       "./node_modules/vuetify/types"
     ],
     "types": [
       "webpack-env",
-      "vuetify"
+      "vuetify",
+      "jest"
     ],
     "paths": {
       "@/*": [
