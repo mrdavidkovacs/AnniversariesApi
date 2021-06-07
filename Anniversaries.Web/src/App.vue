@@ -25,7 +25,7 @@
               v-for="type in anniversaryTypes"
               v-bind:key="type.internalName"
             >
-              <SpecialAnniversaries v-bind:type="type" />
+              <SpecialAnniversaries :type="type" />
             </v-tab-item>
           </v-tabs>
         </div>
