@@ -135,7 +135,7 @@ import IAnniversaryType from "../models/AnniversaryType";
 
 @Component
 export default class SpecialAnniversaries extends Vue {
-  @Prop({ required: true } as const)
+  @Prop({ required: true })
   type!: IAnniversaryType;
 
   private anniversaries: IAnniversary[] = [];
@@ -155,7 +155,7 @@ export default class SpecialAnniversaries extends Vue {
 
   constructor() {
     super();
-    const d = new Date(this.type?.defaultDate);
+    const d = new Date(this.type.defaultDate);
     this.date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
     this.axios = Axios.create();
   }
