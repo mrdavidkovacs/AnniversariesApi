@@ -40,7 +40,7 @@ steps:
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Api"
   failOnStderr: true
 
-- script: npm install
+- script: npm i
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
   displayName: Pull NPM packages
 
