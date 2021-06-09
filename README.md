@@ -7,7 +7,6 @@
 
 ### Checks
 
-![ReSharper](https://github.com/mrdavidkovacs/AnniversariesApi/workflows/ReSharper/badge.svg)
 ![CodeQL](https://github.com/mrdavidkovacs/AnniversariesApi/workflows/CodeQL/badge.svg)
 
 ### Build
