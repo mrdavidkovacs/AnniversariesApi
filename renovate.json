@@ -12,5 +12,6 @@
       "automerge": true
     }
   ],
-  "prHourlyLimit": 10
+  "prHourlyLimit": 10,
+  "ignoreDeps": ["sass-loader"]
 }
