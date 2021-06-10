@@ -55,7 +55,7 @@
               <template v-slot:activator="{ on }">
                 <v-text-field
                   v-model="computedDateFormatted"
-                  v-bind:label="type.dateHint"
+                  :label="type.dateHint"
                   persistent-hint
                   readonly
                   v-on="on"
@@ -71,7 +71,7 @@
 
             <v-text-field
               label="Name (optional)"
-              v-bind:placeholder="'z.B.: ' + this.type.optionalNameHint"
+              :placeholder="'z.B.: ' + this.type.optionalNameHint"
               v-model="optionalName"
             ></v-text-field>
 
