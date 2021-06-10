@@ -155,12 +155,14 @@ export default class SpecialAnniversaries extends Vue {
 
   constructor() {
     super();
-    const d = new Date(this.type.defaultDate);
-    this.date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
     this.axios = Axios.create();
+    const today = new Date();
+    this.date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
   }
 
   async mounted(): Promise<void> {
+    const d = new Date(this.type.defaultDate);
+    this.date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
     await this.loadAnniversaries();
   }
 
