@@ -1,11 +1,28 @@
 import Vue from "vue";
 import App from "./App.vue";
 import "./registerServiceWorker";
-import vuetify from "./plugins/vuetify";
+import Vuetify from "vuetify";
+import de from "vuetify/src/locale/de";
+import WeddingIcon from "@/icons/Wedding.vue";
 
 Vue.config.productionTip = false;
+Vue.use(Vuetify);
+import "vuetify/dist/vuetify.min.css";
 
 new Vue({
-  vuetify,
-  render: (h) => h(App),
+    vuetify: new Vuetify({
+      lang: {
+        locales: { de },
+        current: "de",
+      },
+      icons: {
+        iconfont: "fa",
+        values: {
+          wedding: {
+            component: WeddingIcon,
+          },
+        },
+      },
+    }),
+    render: (h) => h(App),
 }).$mount("#app");

@@ -10,12 +10,12 @@
     <v-main>
       <v-container>
         <div class="w-80">
-          <v-tabs class="elevation-2" dark v-bind:centered="true">
+          <v-tabs class="elevation-2" dark :centered="true">
             <v-tabs-slider></v-tabs-slider>
 
             <v-tab
               v-for="type in anniversaryTypes"
-              v-bind:key="type.internalName"
+              :key="type.internalName"
             >
               <v-icon class="mr-2">{{ type.iconName }}</v-icon>
               {{ type.name }}
@@ -23,9 +23,9 @@
 
             <v-tab-item
               v-for="type in anniversaryTypes"
-              v-bind:key="type.internalName"
+              :key="type.internalName"
             >
-              <SpecialAnniversaries :type="type" />
+              <SpecialAnniversaries :type="type" v-if="type" />
             </v-tab-item>
           </v-tabs>
         </div>

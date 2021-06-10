@@ -55,7 +55,7 @@
               <template v-slot:activator="{ on }">
                 <v-text-field
                   v-model="computedDateFormatted"
-                  v-bind:label="type.dateHint"
+                  :label="type.dateHint"
                   persistent-hint
                   readonly
                   v-on="on"
@@ -71,7 +71,7 @@
 
             <v-text-field
               label="Name (optional)"
-              v-bind:placeholder="'z.B.: ' + this.type.optionalNameHint"
+              :placeholder="'z.B.: ' + this.type.optionalNameHint"
               v-model="optionalName"
             ></v-text-field>
 
@@ -155,12 +155,14 @@ export default class SpecialAnniversaries extends Vue {
 
   constructor() {
     super();
-    const d = new Date(this.type.defaultDate);
-    this.date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
     this.axios = Axios.create();
+    const today = new Date();
+    this.date = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`;
   }
 
   async mounted(): Promise<void> {
+    const d = new Date(this.type.defaultDate);
+    this.date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
     await this.loadAnniversaries();
   }
 
