@@ -11,8 +11,8 @@
     "test": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "4.28.5",
-    "@typescript-eslint/parser": "4.28.5",
+    "@typescript-eslint/eslint-plugin": "4.29.0",
+    "@typescript-eslint/parser": "4.29.0",
     "axios": "0.21.1",
     "core-js": "3.16.0",
     "register-service-worker": "1.7.2",
