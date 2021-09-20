@@ -34,5 +34,5 @@ jobs:
           password: ${{ secrets.ACCESS_TOKEN }}
           repository: mrdavidkovacs/anniversariesapi
           platforms: linux/arm/v7,linux/amrm64/v8
-          push: success() && !steps.findPr.outputs.number
+          push: success() && ${{ github.event_name == 'push' }}
           tags: latest
