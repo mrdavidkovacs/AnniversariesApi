@@ -1,0 +1,10 @@
+version: "2.4"
+services:
+  api:
+    #image: "ghcr.io/mrdavidkovacs/anniversariesapi:latest"
+    container_name: api
+    environment:
+      - ASPNETCORE_URLS=http://0.0.0.0:5001
+    build: .
+    ports:
+      - "5001:5001"

@@ -364,3 +364,5 @@ yarn-error.log*
 *.sw?
 
 .buildinfo.json
+
+/build
