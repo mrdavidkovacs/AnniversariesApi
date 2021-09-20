@@ -48,4 +48,4 @@ jobs:
           repository: mrdavidkovacs/anniversariesapi
           platforms: linux/arm/v7,linux/amrm64/v8
           push: true
-          tags: "PR-${PR}"
+          tags: PR-${PR}
