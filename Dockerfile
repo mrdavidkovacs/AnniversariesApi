@@ -15,11 +15,11 @@ RUN node --version && npm --version
 COPY . /src
 WORKDIR /src
 RUN (cd Anniversaries.Web && npm install && npm run build)
-RUN dotnet restore && dotnet build -c Release -o build --no-restore
+RUN dotnet restore && dotnet build -c Release -o /src/build --no-restore && dotnet publish -c Release -o /src/publish --no-restore --no-build
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 LABEL org.opencontainers.image.source https://github.com/mrdavidkovacs/AnniversariesApi
-COPY --from=buildapi /src/build /App
+COPY --from=buildapi /src/publish /App
 WORKDIR /App
 ENV DOTNET_EnableDiagnostics=0
 EXPOSE 80
