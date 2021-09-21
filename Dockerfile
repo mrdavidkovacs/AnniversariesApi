@@ -2,7 +2,8 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0 AS buildapi
 ENV NODE_VERSION=14.17.6
 ENV NVM_DIR=/root/.nvm
 ENV DOTNET_EnableDiagnostics=0
-RUN apt install -y curl libatomic1 && mkdir -p $NVM_DIR
+RUN type apt-get
+RUN apt-get update && apt-get install -y curl libatomic1 && mkdir -p $NVM_DIR
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
