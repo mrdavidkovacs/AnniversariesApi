@@ -1,9 +1,12 @@
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS buildapi
+#FROM mcr.microsoft.com/dotnet/sdk:5.0 AS buildapi
+FROM ubuntu:20.04 AS buildapi
+ENV NET_VERSION=5.0
 ENV NODE_VERSION=14.17.6
 ENV NVM_DIR=/root/.nvm
 ENV DOTNET_EnableDiagnostics=0
 #RUN type apt-get
 RUN apt-get update && apt-get install -y curl libatomic1 python build-essential && mkdir -p $NVM_DIR
+RUN curl --output dotnet_install.sh https://dot.net/v1/dotnet-install.sh && bash ./dotnet_install.sh -c 5.0
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
