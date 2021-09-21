@@ -15,7 +15,7 @@ RUN node --version && npm --version
 COPY . /src
 WORKDIR /src
 RUN (cd Anniversaries.Web && npm install && npm run build)
-RUN dotnet restore && dotnet build -c Release -o /src/build --no-restore && dotnet publish -c Release -o /src/publish --no-restore --no-build
+RUN dotnet publish -c Release -o /src/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 LABEL org.opencontainers.image.source https://github.com/mrdavidkovacs/AnniversariesApi
