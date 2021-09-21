@@ -7,8 +7,8 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | b
 RUN . "$NVM_DIR/nvm.sh" && nvm install ${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm use v${NODE_VERSION}
 RUN . "$NVM_DIR/nvm.sh" && nvm alias default v${NODE_VERSION}
-ENV PATH="${NVM_DIR}}/versions/node/v${NODE_VERSION}/bin/:${PATH}"
-RUN echo "path: ${PATH}" && ls -lah ${NVM_DIR}}/versions/node/v${NODE_VERSION}/bin && node --version && npm --version
+ENV PATH="${NVM_DIR}/versions/node/v${NODE_VERSION}/bin/:${PATH}"
+RUN . echo "path: ${PATH}" && ls -lah ${NVM_DIR}/versions/node/v${NODE_VERSION}/bin && node --version && npm --version
 COPY . /src
 WORKDIR /src
 RUN (cd Anniversaries.Web && npm install && npm run build)
