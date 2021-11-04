@@ -3,7 +3,7 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import Vuetify from "vuetify";
 import de from "vuetify/src/locale/de";
-import WeddingIcon from "@/icons/Wedding.vue";
+import WeddingIcon from "@/icons/WeddingIcon.vue";
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
