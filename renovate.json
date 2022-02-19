@@ -9,9 +9,14 @@
   ],
   "packageRules": [
     {
+      "matchUpdateTypes": ["major"],
+      "schedule": [
+        "first day of the month"
+      ]
+    },
+    {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
-      "stabilityDays": 10,
       "schedule": [
         "after 2am every tuesday"
       ]
@@ -23,6 +28,10 @@
       "schedule": [
         "after 2am every monday"
       ]
+    },
+    {
+      "matchDatasources": ["npm"],
+      "stabilityDays": 3
     }
   ],
   "prHourlyLimit": 0,
