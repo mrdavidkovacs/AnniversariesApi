@@ -10,9 +10,7 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["major"],
-      "schedule": [
-        "first day of the month"
-      ]
+      "extends": ["schedule:monthly"]
     },
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
