@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: install dependencies
-        run: (CD Anniversaries.Web && npm ci) 
+        run: (cd Anniversaries.Web && npm ci) 
       - uses: oke-py/npm-audit-action@v1.8.4
         with:
           audit_level: moderate
