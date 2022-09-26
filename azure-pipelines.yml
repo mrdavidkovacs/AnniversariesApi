@@ -59,13 +59,13 @@ steps:
     packageType: 'sdk'
     version: '6.x'
 
-- task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2.210.0
   displayName: Restore nuget packages
   inputs:
     command: restore
     projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2.210.0
   displayName: Build application
   inputs:
     command: build
@@ -85,7 +85,7 @@ steps:
 #    projects: '**/*Tests/*.csproj'
 #    arguments: '--configuration $(buildConfiguration) --collect "Code coverage" --no-build'
 
-- task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2.210.0
   displayName: Publish to staging directory
   inputs:
     command: publish
