@@ -106,9 +106,9 @@
                     <v-icon>fas fa-calendar-alt</v-icon>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title
-                      v-text="formatAppointmentDate(item)"
-                    ></v-list-item-title>
+                    <v-list-item-title>
+                      {{ formatAppointmentDate(item) }}
+                    </v-list-item-title>
                     <v-list-item-subtitle>
                       {{ item.name }}
                     </v-list-item-subtitle>
