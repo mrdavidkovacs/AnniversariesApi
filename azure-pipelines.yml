@@ -53,7 +53,7 @@ steps:
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
   displayName: Build FE
 
-- task: UseDotNet@2
+- task: UseDotNet@2.207.2
   displayName: Install dotnetcore sdk
   inputs:
     packageType: 'sdk'
