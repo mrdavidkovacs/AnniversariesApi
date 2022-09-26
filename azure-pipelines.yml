@@ -53,10 +53,6 @@ steps:
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
   displayName: Build FE
 
-- script: npm run test
-  workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
-  displayName: Perform basic FE test
-
 - task: UseDotNet@2
   displayName: Install dotnetcore sdk
   inputs:
