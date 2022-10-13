@@ -52,19 +52,19 @@ steps:
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
   displayName: Build FE
 
-- task: UseDotNet@2.207.2
+- task: UseDotNet@2
   displayName: Install dotnetcore sdk
   inputs:
     packageType: 'sdk'
     version: '7.x'
 
-- task: DotNetCoreCLI@2.210.0
+- task: DotNetCoreCLI@2
   displayName: Restore nuget packages
   inputs:
     command: restore
     projects: '**/*.csproj'
 
-- task: DotNetCoreCLI@2.210.0
+- task: DotNetCoreCLI@2
   displayName: Build application
   inputs:
     command: build
@@ -84,7 +84,7 @@ steps:
 #    projects: '**/*Tests/*.csproj'
 #    arguments: '--configuration $(buildConfiguration) --collect "Code coverage" --no-build'
 
-- task: DotNetCoreCLI@2.210.0
+- task: DotNetCoreCLI@2
   displayName: Publish to staging directory
   inputs:
     command: publish
@@ -92,7 +92,7 @@ steps:
     arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-build'
     zipAfterPublish: True
 
-- task: PublishBuildArtifacts@1.211.0
+- task: PublishBuildArtifacts@1
   displayName: Publish as drop
   inputs:
     pathtoPublish: '$(Build.ArtifactStagingDirectory)' 
