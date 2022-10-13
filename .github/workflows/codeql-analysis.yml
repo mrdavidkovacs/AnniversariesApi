@@ -94,21 +94,47 @@ jobs:
         # with:
         #   languages: go, javascript, csharp, python, cpp, java
 
-      - name: Download backend build output
-        uses: actions/download-artifact@v3.0.0
-        with:
-          # Artifact name
-          name: backend-output
-          # Destination path
-          path: src/backend
+      #- name: Download backend build output
+      #  uses: actions/download-artifact@v3.0.0
+      #  with:
+      #    # Artifact name
+      #    name: backend-output
+      #    # Destination path
+      #    path: src/backend
 
-      - name: Download frontend build output
-        uses: actions/download-artifact@v3.0.0
+      #- name: Download frontend build output
+      #  uses: actions/download-artifact@v3.0.0
+      #  with:
+      #    # Artifact name
+      #    name: frontend-output
+      #    # Destination path
+      #    path: src/frontend
+          
+      - name: Checkout repository
+        uses: actions/checkout@v3
         with:
-          # Artifact name
-          name: frontend-output
-          # Destination path
-          path: src/frontend
+          # We must fetch at least the immediate parents so that if this is
+          # a pull request then we can checkout the head.
+          fetch-depth: 2
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - run: npm install
+        working-directory: Anniversaries.Web
+
+      - run: npm run build
+        working-directory: Anniversaries.Web
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+
+      - name: Build API
+        run: dotnet build AnniversariesApi.sln -o _output
 
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 https://git.io/JvXDl
