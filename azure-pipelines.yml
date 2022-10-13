@@ -40,10 +40,9 @@ steps:
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Api"
   failOnStderr: true
 
-- task: NodeTool@0.211.0
-  displayName: "Install specific node version 14"
+- task: NodeTool@0
   inputs:
-    versionSpec: '14.x' 
+    versionSpec: '14.x'
 
 - script: npm i
   workingDirectory: "$(Build.SourcesDirectory)/Anniversaries.Web"
