@@ -100,7 +100,7 @@ jobs:
           # Artifact name
           name: backend-output
           # Destination path
-          path: /src/backend
+          path: src/backend
 
       - name: Download frontend build output
         uses: actions/download-artifact@v3.0.0
@@ -108,7 +108,7 @@ jobs:
           # Artifact name
           name: frontend-output
           # Destination path
-          path: /src/frontend
+          path: src/frontend
 
       # ℹ️ Command-line programs to run using the OS shell.
       # 📚 https://git.io/JvXDl
