@@ -57,7 +57,7 @@ steps:
   displayName: Install dotnetcore sdk
   inputs:
     packageType: 'sdk'
-    version: '6.x'
+    version: '7.x'
 
 - task: DotNetCoreCLI@2.210.0
   displayName: Restore nuget packages
