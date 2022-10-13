@@ -57,6 +57,7 @@ steps:
   inputs:
     packageType: 'sdk'
     version: '7.x'
+    includePreviewVersions: true
 
 - task: DotNetCoreCLI@2
   displayName: Restore nuget packages
