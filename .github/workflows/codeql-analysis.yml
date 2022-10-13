@@ -12,10 +12,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  analyse:
-    name: Analyse
+  build-backend:
+    name: build backend
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -24,13 +24,25 @@ jobs:
           # a pull request then we can checkout the head.
           fetch-depth: 2
 
-      # Initializes the CodeQL tools for scanning.
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
 
-        # Override language selection by uncommenting this and choosing your languages
-        # with:
-        #   languages: go, javascript, csharp, python, cpp, java
+      - name: Build API
+        run: dotnet build AnniversariesApi.sln
+        
+  build-frontend:
+    name: build frontend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          # We must fetch at least the immediate parents so that if this is
+          # a pull request then we can checkout the head.
+          fetch-depth: 2
 
       - name: Install Node
         uses: actions/setup-node@v3
@@ -43,6 +55,39 @@ jobs:
       - run: npm run build
         working-directory: Anniversaries.Web
 
+  analyse:
+    name: Analyse
+    runs-on: ubuntu-latest
+    needs: 
+      - build-backend
+      - build-frontend
+
+    steps:
+      # Initializes the CodeQL tools for scanning.
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        # Override language selection by uncommenting this and choosing your languages
+        # with:
+        #   languages: go, javascript, csharp, python, cpp, java
+        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          # We must fetch at least the immediate parents so that if this is
+          # a pull request then we can checkout the head.
+          fetch-depth: 2
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - run: npm install
+        working-directory: Anniversaries.Web
+
+      - run: npm run build
+        working-directory: Anniversaries.Web
+        
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
