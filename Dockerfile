@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS buildapi
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS buildapi
 ENV NODE_VERSION=14.17.6
 ENV NVM_DIR=/root/.nvm
 ENV DOTNET_EnableDiagnostics=0
@@ -17,7 +17,7 @@ WORKDIR /src
 RUN (cd Anniversaries.Web && npm install && npm run build)
 RUN dotnet publish -c Release -o /src/publish
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 LABEL org.opencontainers.image.source https://github.com/mrdavidkovacs/AnniversariesApi
 COPY --from=buildapi /src/publish /App
 WORKDIR /App
