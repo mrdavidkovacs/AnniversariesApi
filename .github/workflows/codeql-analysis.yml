@@ -33,7 +33,7 @@ jobs:
         run: dotnet build AnniversariesApi.sln -o _output
         
       - name: Upload Backend Output
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v3.1.2
         with:
           # Artifact name
           name: backend-output
@@ -68,7 +68,7 @@ jobs:
         working-directory: Anniversaries.Web
         
       - name: Upload Frontend Output
-        uses: actions/upload-artifact@v3.1.1
+        uses: actions/upload-artifact@v3.1.2
         with:
           # Artifact name
           name: frontend-output
