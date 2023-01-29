@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS buildapi
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS buildapi
 ENV NODE_VERSION=14.17.6
 ENV NVM_DIR=/root/.nvm
 ENV DOTNET_EnableDiagnostics=0
